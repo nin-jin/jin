@@ -1,0 +1,32 @@
+void function( path ){                    
+    var fs= require( 'fs' )               
+    var source= fs.readFileSync( path )   
+    source= 'with(this){' + source + '}'  
+    module._compile( source, path )       
+    return arguments.callee               
+}                                         
+        
+("jin\\proxy\\jin_proxy.jam.js")
+("jin\\lazyProxy\\jin_lazyProxy.jam.js")
+("jin\\async2sync\\jin_async2sync.env=node.jam.js")
+("jin\\fiberizer\\jin_fiberizer.env=node.jam.js")
+("jin\\autoloader\\jin_autoloader.env=node.jam.js")
+("jin\\jin\\jin.env=node.jam.js")
+("jin\\application\\jin_application.env=node.jam.js")
+("jin\\factory\\jin_factory.jam.js")
+("jin\\method\\jin_method.jam.js")
+("jin\\class\\jin_class.jam.js")
+("jin\\mixin\\jin_mixin.jam.js")
+("jin\\registry\\jin_registry.jam.js")
+("jin\\wrapper\\jin_wrapper.jam.js")
+("jin\\file\\jin_file.env=node.jam.js")
+("jin\\listFiles\\jin_listFiles.env=node.jam.js")
+("jin\\pms\\jin_pms.env=node.jam.js")
+("jin\\pack\\jin_pack.env=node.jam.js")
+("jin\\src\\jin_src.env=node.jam.js")
+("jin\\mod\\jin_mod.env=node.jam.js")
+("jin\\operator\\jin_operator.js")
+("jin\\path\\jin_path.jam.js")
+("jin\\persistent\\jin_persistent.env=node.jam.js")
+("jin\\tree\\jin_tree.jam.js")
+("jin\\unwrap\\jin_unwrap.jam.js")
