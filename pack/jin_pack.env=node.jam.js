@@ -12,6 +12,7 @@ $jin_class( function( $jin_pack, pack ){
     
     pack.init= function( pack, path ){
         pack.file= $jin_file( path )
+        pack.require()
     }
     
     pack.pms= function( pack ){
