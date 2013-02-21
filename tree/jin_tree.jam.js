@@ -26,7 +26,7 @@ $jin_class( function( $jin_tree, tree ){
                 var key= keys[ j ]
                 if( !key ) continue
                 
-                var t= new Tree( [], key )
+                var t= $jin_tree( [], key )
                 s.push( t )
                 s= t.content
             }
@@ -60,14 +60,14 @@ $jin_class( function( $jin_tree, tree ){
             }
         } )
         
-        if( this.name ){
-            if( this.content.length > 1 ){
+        if( tree.name ){
+            if( tree.content.length > 1 ){
                 lines= lines.map( function( line ){
                     return '\t' + line
                 })
-                lines.unshift( this.name )
+                lines.unshift( tree.name )
             } else {
-                lines[ 0 ]= this.name + ' ' + lines[ 0 ]
+                lines[ 0 ]= tree.name + ' ' + lines[ 0 ]
             }
         }
         
@@ -81,13 +81,13 @@ $jin_class( function( $jin_tree, tree ){
     tree.values= function( tree, values ){
         if( arguments.length > 1 ){
             var args= [ 0, tree.data.length ].concat( values )
-            args.splice.apply( this.data, args )
+            args.splice.apply( tree.data, args )
             return tree
         }
         
         values= []
         
-        this.forEach( function( val ){
+        tree.forEach( function( val ){
             if( val instanceof $jin_tree ) return
             values.push( val )
         } )
@@ -110,6 +110,69 @@ $jin_class( function( $jin_tree, tree ){
     
     tree.inspect= function( tree ){
         return String( tree.lines() )
+    }
+    
+    tree.toXMLString= function( tree ){
+        var res= []
+        if( !tree.name ){
+            tree.forEach( function( val ){
+                if( val instanceof $jin_tree ){
+                    res.push( val.toXMLString() )
+                } else {
+                    res.push( encodeXML( val ) )
+                }
+            } )
+        } else if( tree.name === '@' ){
+            tree.forEach( function( val ){
+                if(!( val instanceof $jin_tree )) return
+                res.push( " " + val.name + '="' )
+                if( val.content.length ){
+                    res.push( $jin_tree( val.content ).toXMLString() )
+                } else {
+                    res.push( val.name )
+                }
+                res.push( '"' )
+            } )
+        } else if( tree.name === '?' ){
+            tree.forEach( function( val ){
+                if(!( val instanceof $jin_tree )) return
+                res.push( "<?" + val.name )
+                val.forEach( function( v ){
+                    if( v instanceof $jin_tree ){
+                        res.push( " " + v.name + '="' )
+                        res.push( $jin_tree( v.content ).toXMLString() )
+                        res.push( '"' )
+                    } else {
+                        res.push( encodeXML( v ) )
+                    }
+                } )
+                res.push( '?>\n' )
+            } )
+        } else {
+            res.push( '<' + tree.name )
+            res.push( tree.select( '@' ).toXMLString() )
+            var content= []
+            tree.forEach( function( val ){
+                if( val instanceof $jin_tree ){
+                    if( val.name === '@' ) return
+                    content.push( val.toXMLString() )
+                } else {
+                    content.push( encodeXML( val ) + '\n' )
+                }
+            } )
+            if( content.length ){
+                res.push( '>\n' )
+                res= res.concat( content )
+                res.push( '</' + tree.name + '>\n' )
+            } else {
+                res.push( ' />\n' )
+            }
+        }
+        return res.join( '' )
+    }
+    
+    var encodeXML= function( val ){
+        return val.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' )
     }
     
     var treePath= $jin_path( new function( ){

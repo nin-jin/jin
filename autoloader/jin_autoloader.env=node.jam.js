@@ -10,12 +10,13 @@ $jin_proxy( { get: function( prefix, name ){
         
         if( name === 'inspect' ) return function(){ return '$jin_autoloader( "' + prefix + '" )' }
         
-        console.info( '$.jin.loader: Autoinstall( ' + path + ' )')
+        if( !$jin_confirm( 'Module [' + path + '] not found. Try to install them via NPM?' ) )
+            throw error
         
-        var $= $jin_autoloader()
-        $.npm.loadSyncNow( {} )
-        $.npm.commands.installSyncNow([ path ])
+        var npm= $jin_autoloader().npm
+        $jin_async2sync( npm.load , 'now' ).call( npm, {} )
+        $jin_async2sync( npm.commands.install, 'now' ).call( npm, [ path ] )
     }
     
-    return /*$jin_fiberizer*/( require( path ) )
+    return require( path )
 } } )

@@ -3,21 +3,21 @@ function( body, options ){
     
     $jin_application( process.env[ '$jin_persistent:body' ] ? body : supervisor )
     
-    function supervisor( $ ){
+    function supervisor( ){
         var app= null
         var allowRestart= false
         
         function start( ){
-            console.info( $['cli-color'].yellow( '$jin_persistent: Starting application...' ) )
+            console.info( $node['cli-color'].yellow( '$jin_persistent: Starting application...' ) )
             var env= Object.create( process.env )
             env[ '$jin_persistent:body' ]= true
-            app= $.child_process.fork( process.mainModule.filename, [], { env: env } )
+            app= $node.child_process.fork( process.mainModule.filename, [], { env: env } )
             
             allowRestart= false
             var isStopped= false
             
             app.on( 'exit', function( code ){
-                if( code ) console.error( $['cli-color'].redBright( '$jin_persistent: Application halted (' + code + ')' ) )
+                if( code ) console.error( $node['cli-color'].redBright( '$jin_persistent: Application halted (' + code + ')' ) )
                 app= null
                 if( allowRestart ) start()
             } )
@@ -35,8 +35,8 @@ function( body, options ){
         
         start()
         
-        $.jin.sourceWatcher( function( event ){
-            console.info( $['cli-color'].green( '$jin_persistent: Some files changed!' ) )
+        $jin_sourceWatcher( function( event ){
+            console.info( $node['cli-color'].green( '$jin_persistent: Some files changed!' ) )
             restart()
         } )
         

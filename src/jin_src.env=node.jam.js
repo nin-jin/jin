@@ -21,21 +21,21 @@ $jin_class( function( $jin_src, src ){
     src._uses= null
     src.uses= function( src ){
         if( src._uses ) return src._uses
-        var uses= [ src.mod(), src.mod().pack().mod() ]
+        var uses= [ src.mod() ]
         
         if( /\.jam\.js$/.test( src.file ) ){
             String( src.file.content() )
             .replace
-            (   /\$([a-zA-Z0-9]+)_([a-zA-Z0-9]+)/g
+            (   /\$([a-zA-Z0-9]+)(?:_([a-zA-Z0-9]+))?(?!\w*:)/g
             ,   function( str, packName, modName ){
-                    var mod= src.mod().pack().pms().pack( packName ).mod( modName )
+                    var mod= src.mod().pack().pms().pack( packName ).mod( modName || packName )
                     if( !~uses.indexOf( mod ) ) uses.push( mod )
                 }
             )
         }
         
         if( /\.meta\.tree$/.test( src.file ) ){
-            var meta= $.jin.tree.parse( src.file.content() )
+            var meta= $jin_tree.parse( src.file.content() )
             
             meta.select(' include / module / ').values().forEach( function( moduleName ){
                 var mod= src.mod().pack().pms().mod( moduleName )
@@ -48,6 +48,31 @@ $jin_class( function( $jin_src, src ){
                     if( !~uses.indexOf( mod ) ) uses.push( mod )
                 } )
             } )
+        }
+        
+        if( /\.xsl$/.test( src.file ) ){
+            String( src.file.content() )
+            .replace
+            (   /<([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(?!\w*:)/g
+            ,   function( str, packName, modName ){
+                    var mod= src.mod().pack().pms().pack( packName ).mod( modName )
+                    if( !~uses.indexOf( mod ) ) uses.push( mod )
+                }
+            )
+            .replace
+            (   / ([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(?:_\w+)?="/g
+            ,   function( str, packName, modName ){
+                    var mod= src.mod().pack().pms().pack( packName ).mod( modName )
+                    if( !~uses.indexOf( mod ) ) uses.push( mod )
+                }
+            )
+            .replace
+            (   /"([a-zA-Z0-9]+)_([a-zA-Z0-9]+)(?:_\w+)?"/g
+            ,   function( str, packName, modName ){
+                    var mod= src.mod().pack().pms().pack( packName ).mod( modName )
+                    if( !~uses.indexOf( mod ) ) uses.push( mod )
+                }
+            )
         }
         
         return src._uses= uses

@@ -32,6 +32,24 @@ $jin_class( function( $jin_pack, pack ){
         } )
     }
     
+    pack.require= function( pack ){
+        if( pack.file.exists() ) return pack
+        
+        console.log( 'Package [' + pack + '] not found. Search in repository...' )
+        
+        var repoSource= $jin_request({ uri: 'https://raw.github.com/nin-jin/pms/master/repos.tree' }).body
+        var repo= $jin_tree.parse( repoSource ).select( pack.file.name() + ' / ').values().toString()
+        
+        if( !repo ) throw new Error( 'Package [' + pack + '] not found in repository' )
+        
+        if( !$jin_confirm( 'Install [' + pack + '] from [' + repo + ']?' ) )
+            throw new Error( 'Package [' + pack + '] is required' )
+        
+        $jin_execute( 'git', [ 'clone', repo, pack.file.name() ] )
+        
+        return pack
+    }
+    
     pack.index= function( pack, vary ){
         if( !vary ) vary= {}
         var varyFilter= []
@@ -48,9 +66,16 @@ $jin_class( function( $jin_pack, pack ){
             if( ~indexMods.indexOf( mod ) ) return
             indexMods.push( mod )
             
+            mod.pack().require()
+            
             var srcs= mod.srcs().filter( function( src ){
                 return !varyFilter.test( src.file )
             } )
+            
+            if( !srcs.length ) return
+            
+            var mainMod= mod.pack().mod()
+            if( mainMod.file.exists() ) processMod( mainMod )
             
             srcs.forEach( function( src ){
                 src.uses().forEach( processMod )
@@ -62,61 +87,13 @@ $jin_class( function( $jin_pack, pack ){
         return indexSrcs
     }
     
-    pack.build= function( pack, vary ){
-        var filePrefix= vary2string( 'index', vary )
-        
-        var srcs= pack.index( vary )
-        
-        var srcsJS= srcs.filter( function( src ){
-            return /\.js$/.test( src.file.name() )
-        } )
-        
-        var indexJS= [ "\
-void function( path ){                    \n\
-    var fs= require( 'fs' )               \n\
-    var source= fs.readFileSync( path )   \n\
-    source= 'with(this){' + source + '}'  \n\
-    module._compile( source, path )       \n\
-    return arguments.callee               \n\
-}                                         \n\
-        "]
-        
-        indexJS= indexJS.concat( srcsJS.map( function( src ){
-            return '("' + String( src ).replace( /\\/g, '\\\\' ) + '")'
-        } ) )
-        
-        pack.file.child( '-mix' ).child( filePrefix + '.stage=dev.js' )
-        .content( indexJS.join( '\n' ) )
-        
-        var contentsJS= srcsJS.map( function( src ){
-            return ';//' + src + '\n' + src.file.content()
-        } )
-        
-        pack.file.child( '-mix' ).child( filePrefix + '.stage=release.js' )
-        .content( 'with(this){\n' + contentsJS.join( '\n' ) + '}' )
-        
-        return pack
-    }
-    
     pack.load= function( pack, vary ){
         if( !vary ) vary= {}
         vary.env= 'node'
+        vary.stage= vary.stage || 'release'
         
-        var path= String( pack.file.child( '-mix' ).child( vary2string( 'index', vary ) + '.js' ) )
-        return require( $.path.resolve( path ) )
-    }
-    
-    var vary2string= function( prefix, vary ){
-        if( !vary ) vary= {}
-        
-        var chunks= []
-        for( var key in vary ){
-            chunks.push( key + '=' + vary[ key ] )
-        }
-        chunks.sort()
-        chunks.unshift( prefix )
-        
-        return chunks.join( '.' )
+        var path= String( pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.js' ) )
+        return require( $node.path.resolve( path ) )
     }
     
 } )

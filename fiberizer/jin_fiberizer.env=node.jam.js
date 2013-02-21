@@ -11,7 +11,7 @@ $jin_proxy( { get: function( base, name ){
         if( typeof base[ name ] !== 'object' )
             return base[ name ]
         
-        return fiberizer( base[ name ] )
+        return $jin_fiberizer( base[ name ] )
     }
     
     name= chunks[ 1 ]

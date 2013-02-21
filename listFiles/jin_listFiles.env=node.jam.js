@@ -37,8 +37,8 @@ function( root, includeDir, excludeDir ){
         
     }( Files.prototype )
 
-    var getStat= $.fs.statSync
-    var getChilds= $.fs.readdirSync
+    var getStat= $node.fs.statSync
+    var getChilds= $node.fs.readdirSync
     
     var childs= {}
     childs[ '/' ]= getChilds( root )

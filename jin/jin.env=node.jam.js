@@ -1,1 +1,0 @@
-this.$= $jin_autoloader()

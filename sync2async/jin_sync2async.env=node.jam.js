@@ -1,0 +1,24 @@
+this.$jin_sync2async=
+$jin_proxy( { apply: function( func, self, args ){
+    if( args.length > func.length )
+    var callback= [].pop.call( args ) 
+    
+    var proc=
+    callback
+    ?   function( ){
+            try {
+                var result= func.apply( self, args )
+            } catch( err ){
+                var error= err
+            }
+            callback( error, result )
+        }
+    :   function( ){
+            func.apply( self, args )
+        }
+    
+    var fibers= $node.fibers
+    
+    if( fibers.current ) proc()
+    else fibers( proc ).run()
+} } )
