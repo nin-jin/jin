@@ -9,7 +9,7 @@ this.$jin_build4node_release= function( pack, vary ){
         return /\.js$/.test( src.file.name() )
     } )
     .map( function( src ){
-        return ';//' + src + '\n' + src.file.content()
+        return ';//../../' + src.file.uri() + '\n' + src.file.content()
     } )
     
     return pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.js' )
