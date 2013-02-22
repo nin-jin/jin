@@ -13,5 +13,5 @@ this.$jin_build4web_js_release= function( pack, vary ){
     } )
     
     return pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.js' )
-    .content( 'this.$' + pack.file.name() + '$= new function(){ with( this ){\n' + index.join( '\n' ) + '\n}}' )
+    .content( index.join( '\n' ) )
 }
