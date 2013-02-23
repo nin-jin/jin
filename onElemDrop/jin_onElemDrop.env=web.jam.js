@@ -21,10 +21,7 @@ this.$jin_onElemDrop= $jin_event( function( $jin_onElemDrop, event ){
             var target= event.target()
             if( target.nodeType !== 1 ) return
             
-            if( /*@cc_on!@*/ false ) // TODO: implement feature detection
-                return
-            
-            var elems= [].slice.call( target.getElementsByTagName( '*' ) )
+            var elems= ( /*@cc_on!@*/0 ) ? [] : [].slice.call( target.getElementsByTagName( '*' ) )
             elems.unshift( event.target() )
             
             for( var i= 0; i < elems.length; ++i ){
