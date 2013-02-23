@@ -93,8 +93,8 @@ $jin_class( function( $jin_pack, pack ){
         vary.env= 'node'
         vary.stage= vary.stage || 'release'
         
-        var path= String( pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.js' ) )
-        return require( $node.path.resolve( path ) )
+        var file= pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.js' )
+        return file.load()
     }
     
 } )

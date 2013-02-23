@@ -1,10 +1,10 @@
 this.$jin_fiberizer=
 $jin_proxy( { get: function( base, name ){
-    if( !require( 'fibers' ).current )
+    if( !$node.fibers.current )
         return base[ name ]
     
     if( name === 'valueOf' ) return function( ){ return base }
-    if( name === 'inspect' ) return function(){ return require( 'util' ).inspect( base ) }
+    if( name === 'inspect' ) return function(){ return $node.util.inspect( base ) }
     
     var chunks= /^(.+)Sync(Now)?$/.exec( name )
     if( !chunks ){

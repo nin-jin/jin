@@ -29,7 +29,7 @@ function( func, now ){
                 
                 var get= function( ){ 
                     if( !done ){
-                        var fibers= require( 'fibers' )
+                        var fibers= $node.fibers
                         fiber= fibers.current
                         fibers.yield()
                         if( error ) error.stack+= '\n--fiber--' + (new Error).stack.replace( /^[^\n]*/, '' )

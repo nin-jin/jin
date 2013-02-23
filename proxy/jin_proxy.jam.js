@@ -53,7 +53,7 @@ function( handler ){
             
             if( name === 'valueOf' ) return this.valueOf
             if( name === 'toString' ) return function(){ return String( this.valueOf() ) }
-            if( name === 'inspect' ) return function(){ return require( 'util' ).inspect( this.valueOf() ) }
+            if( name === 'inspect' ) return function(){ return $node.util.inspect( this.valueOf() ) }
             if( this.valueOf() == null ) return null
             
             return this.valueOf()[ name ]
