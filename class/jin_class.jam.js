@@ -13,6 +13,7 @@ this.$jin_class= function( scheme ){
             return obj
         }
         
+        var destroy= 
         proto.destroy=
         function( obj ){
             for( var key in obj ){
@@ -25,6 +26,10 @@ this.$jin_class= function( scheme ){
                 
                 delete obj[ key ]
             }
+        }
+        
+        klass.destroy= function( ){
+            destroy( klass )
         }
         
         scheme( klass, proto )

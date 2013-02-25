@@ -7,11 +7,11 @@ $jin_class( function( $jin_component, component ){
     component.widget= null
     
     var init= component.init
-    component.init= function( component, id, Widget ){
+    component.init= function( component, id, widget ){
         init.apply( this, arguments )
         
         component.id= id
-        component.Widget= Widget
+        component.widget= { make: widget }
         
         $jin_component.map[ component.id ]= component
         
@@ -71,7 +71,7 @@ $jin_class( function( $jin_component, component ){
         var widgets= node.jin_component_widgets || {}
         if( component.id in widgets ) return
         
-        widgets[ component.id ]= component.Widget( node )
+        widgets[ component.id ]= component.widget.make( node )
         node.jin_component_widgets= widgets
     }
 

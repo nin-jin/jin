@@ -1,0 +1,41 @@
+<?xml-stylesheet href="../../doc/-mix/index.stage=dev.xsl" type="text/xsl"?>
+<doc_root
+    doc_title="$jin_widget"
+    >
+
+    <p>Примесь делающая класс виджетом, корый регистрирует себя для определённых элементов и реализует единое апи взаимодействия между виджетами.</p>
+    <p>
+        <script type="wc_test">
+            test.ok( $jin_widget )
+        </script>
+        <script type="wc_test">
+            this.widget= $jin_widget( function(){ } )
+            test.ok( this.widget )
+        </script>
+        <script type="wc_test">
+            var result
+            
+            this.widget= $jin_class( function( Widget, widget ){
+                Widget.id= $jin_makeId( 'jin_widget_test' )
+                
+                $jin_widget.scheme( Widget, widget )
+                
+                var init= widget.init
+                widget.init= function( widget, node ){
+                    init.apply( this, arguments )
+                    result= node
+                }
+            })
+            
+            test.not( result )
+            
+            var node= document.createElement( 'button' )
+            node.setAttribute( this.widget.id, 'true' )
+            document.body.appendChild( node )
+            
+            test.ok( result )
+            
+            node.parentNode.removeChild( node )
+        </script>
+    </p>
+</doc_root>
