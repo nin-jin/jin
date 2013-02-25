@@ -1,0 +1,36 @@
+<?xml-stylesheet href="../../doc/-mix/index.stage=dev.xsl" type="text/xsl"?>
+<doc_root
+    doc_title="$jin_onDataSupply"
+    >
+
+    <p>Событие возникающее, когда меняется часть поддерева (в том числе и атрибуты). </p>
+    <p>
+        <script type="wc_test">
+            test.ok( $jin_onDataSupply )
+        </script>
+    </p>
+    <p>
+        <script type="wc_test">
+            var body= document.getElementsByTagName( 'body' )[0]
+            
+            var node= document.createElement( $jin_makeId( 'jin_onDataSupply_test' ) )
+            body.appendChild( node )
+            
+            var result
+            this.listener= $jin_onDataSupply.listen( node, function( event ){
+                result= event.content()
+                event.catched( true )
+            })
+            
+            var content= {}
+            content[ $jin_makeId( 'jin_onDataSupply_test' ) ]= 123
+            
+            $jin_onDataSupply().content( content ).scream( node )
+            
+            node.parentNode.removeChild( node )
+            
+            test.ok( result, content )
+        </script>
+    </p>
+    
+</doc_root>
