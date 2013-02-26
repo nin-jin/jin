@@ -1,0 +1,44 @@
+[jin_reset="true"] {
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    text-decoration: inherit;
+    cursor: inherit;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    top: none;
+    bottom: none;
+    left: none;
+    right: none;
+    position: static;
+    border: none;
+    outline: none;
+}
+
+html[jin_reset="true"] {
+    width: 100%;
+    height: 100%;
+    background: white;
+    color: black;
+    font: 14pt/1.5 'Times', serif;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+body[jin_reset="true"] {
+    width: 100%;
+    height: 100%;
+}
+
+a[jin_reset="true"],
+button[jin_reset="true"] {
+    cursor: pointer;
+}
+
+iframe[jin_reset="true"],
+object[jin_reset="true"] {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
