@@ -1,5 +1,6 @@
-this.$jin_widget=
-$jin_mixin( function( $jin_widget, widget ){
+this.$jin_widget= function( $jin_widget, widget ){
+    
+    //$jin_wrapper.scheme( $jin_widget, widget )
     
     $jin_widget.component= $jin_component( $jin_widget.id, $jin_widget )
     
@@ -9,4 +10,4 @@ $jin_mixin( function( $jin_widget, widget ){
         destroy()
     }
     
-})
+}

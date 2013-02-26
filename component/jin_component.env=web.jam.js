@@ -17,7 +17,7 @@ $jin_class( function( $jin_component, component ){
         
         var nodes= document.getElementsByTagName( '*' )
         for( var i= 0; i < nodes.length; ++i ){
-            checkNodeComponent( nodes[ i ], component )
+            checkNode( nodes[ i ] )
         }
     }
     

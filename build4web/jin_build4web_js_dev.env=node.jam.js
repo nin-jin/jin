@@ -20,11 +20,16 @@ void function( modules ){                                               \n\
     var next= function( ){                                              \n\
         var module= modules.shift()                                     \n\
         if( !module ) return                                            \n\
-        var loader= document.createElement( 'script' )                  \n\
-        loader.parentScript= script                                     \n\
-        loader.src= dir + module                                        \n\
-        loader.onload= next                                             \n\
-        script.parentNode.insertBefore( loader, script )                \n\
+        try {                                                           \n\
+            document.write( '<script src=\"'+dir+module+'\"></script>' )\n\
+            next()                                                      \n\
+        } catch( error ){                                               \n\
+            var loader= document.createElement( 'script' )              \n\
+            loader.parentScript= script                                 \n\
+            loader.src= dir + module                                    \n\
+            loader.onload= next                                         \n\
+            script.parentNode.insertBefore( loader, script )            \n\
+        }                                                               \n\
     }                                                                   \n\
     next()                                                              \n\
 }.call( this, [                                                         \n\
