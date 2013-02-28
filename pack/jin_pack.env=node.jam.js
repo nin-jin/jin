@@ -43,8 +43,9 @@ $jin_class( function( $jin_pack, pack ){
         
         if( !repo ) throw new Error( 'Package [' + pack + '] not found in repository' )
         
-        if( !$jin_confirm( 'Install [' + pack + '] from [' + repo + ']?' ) )
-            throw new Error( 'Package [' + pack + '] is required' )
+        console.log( 'Installing [' + pack + '] from [' + repo + ']...' )
+        //if( !$jin_confirm( 'Install [' + pack + '] from [' + repo + ']?' ) )
+        //    throw new Error( 'Package [' + pack + '] is required' )
         
         $jin_execute( 'git', [ 'clone', repo, pack.file.name() ] )
         

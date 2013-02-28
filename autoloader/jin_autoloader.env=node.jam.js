@@ -10,8 +10,9 @@ $jin_proxy( { get: function( prefix, name ){
         
         if( name === 'inspect' ) return function(){ return '$jin_autoloader( "' + prefix + '" )' }
         
-        if( !$jin_confirm( 'Module [' + path + '] not found. Try to install them via NPM?' ) )
-            throw error
+        console.log( 'Module [' + path + '] not found. Trying to install them via NPM...' )
+        //if( !$jin_confirm( 'Module [' + path + '] not found. Try to install them via NPM?' ) )
+        //    throw error
         
         var npm= $jin_autoloader().npm
         $jin_async2sync( npm.load , 'now' ).call( npm, {} )

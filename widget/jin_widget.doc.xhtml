@@ -9,16 +9,12 @@
             test.ok( $jin_widget )
         </script>
         <script type="wc_test">
-            this.widget= $jin_widget( function(){ } )
-            test.ok( this.widget )
-        </script>
-        <script type="wc_test">
             var result
             
             this.widget= $jin_class( function( Widget, widget ){
                 Widget.id= $jin_makeId( 'jin_widget_test' )
                 
-                $jin_widget.scheme( Widget, widget )
+                $jin_widget( Widget, widget )
                 
                 var init= widget.init
                 widget.init= function( widget, node ){

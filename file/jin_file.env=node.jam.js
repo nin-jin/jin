@@ -52,7 +52,7 @@ $jin_class( function( $jin_file, file ){
         var path= String( file )
         if( arguments.length < 2 ) return $node.fs.readFileSync( path )
         try {
-            $node.fs.mkdirSync( file.parent() )
+            $node.fs.mkdirSync( String( file.parent() ) )
         } catch( error ){
             if( error.code !== 'EEXIST' ) throw error
         }
