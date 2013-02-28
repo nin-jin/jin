@@ -26,11 +26,18 @@ $jin_class( function( $jin_nodeListener, listener ){
     
     listener.on=
     function( listener ){
-        listener.node.addEventListener
-        (   listener.event
-        ,   listener.handler
-        ,   false
-        )
+        if( listener.node.addEventListener ){
+            listener.node.addEventListener
+            (   listener.event
+            ,   listener.handler
+            ,   false
+            )
+        } else {
+            listener.node.attachEvent
+            (   listener.event
+            ,   listener.handler
+            )
+        }
         
         return listener
     }

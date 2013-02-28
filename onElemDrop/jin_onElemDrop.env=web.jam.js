@@ -6,7 +6,7 @@ this.$jin_onElemDrop= $jin_event( function( $jin_onElemDrop, event ){
     function( node, handler ){
         return $jin_nodeListener
         (   node
-        ,   'DOMNodeInserted'
+        ,   'DOMNodeRemoved'
         ,   $jin_onElemDrop.wrapHandler( handler )
         )
     }
