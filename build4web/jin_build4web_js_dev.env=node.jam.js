@@ -16,14 +16,20 @@ this.$jin_build4web_js_dev= function( pack, vary ){
 void function( modules ){                                               \n\
     var scripts= document.getElementsByTagName( 'script' )              \n\
     var script= document.currentScript || scripts[ scripts.length - 1 ] \n\
-    var dir= script.src.replace( /[^\/]+$/, '' )                        \n\
+    var dir= script.src.replace( /[^/]+$/, '' )                         \n\
+    try {                                                               \n\
+        document.write( '' )                                            \n\
+        var writable= true                                              \n\
+    } catch( error ){                                                   \n\
+        var writable= false                                             \n\
+    }                                                                   \n\
     var next= function( ){                                              \n\
         var module= modules.shift()                                     \n\
         if( !module ) return                                            \n\
-        try {                                                           \n\
+        if( writable ) {                                                \n\
             document.write( '<script src=\"'+dir+module+'\"></script>' )\n\
             next()                                                      \n\
-        } catch( error ){                                               \n\
+        } else {                                                        \n\
             var loader= document.createElement( 'script' )              \n\
             loader.parentScript= script                                 \n\
             loader.src= dir + module                                    \n\
