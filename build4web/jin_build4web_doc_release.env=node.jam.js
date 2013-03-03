@@ -3,19 +3,24 @@ this.$jin_build4web_doc_release= function( pack, vary ){
     vary= vary || {}
     vary.stage= 'release'
     
-    var index= ( new $node.xmldom.DOMParser ).parseFromString( '<?xml-stylesheet href="../../doc/-mix/index.stage=release.xsl" type="text/xsl"?><doc_list/>' )
+    var xslFile= pack.file.child( '-mix' ).child( $jin_vary2string( 'doc', vary ) + '.xsl' )
+    .content( '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:include href="../../doc/-mix/index.stage=release.xsl"/><xsl:include href="index.stage=release.xsl"/></xsl:stylesheet>' )
     
-    pack.index( vary )
-    .filter( function( src ){
-        return /\.doc\.xhtml$/.test( src.file.name() )
-    } )
-    .forEach( function( src ){
-        var comment= index.createComment( '../../' + src.file.relate('').replace( /\\/g, '/' ) )
-        index.documentElement.appendChild( index.importNode( comment, true ) )
-        var doc= ( new $node.xmldom.DOMParser ).parseFromString( src.file.content() + '' ).documentElement
-        index.documentElement.appendChild( doc )
-    } )
+    var index= ( new $node.xmldom.DOMParser ).parseFromString( '<?xml-stylesheet href="../-mix/' + xslFile.name() + '" type="text/xsl"?><doc_list/>' )
     
-    return pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.doc.xhtml' )
+    pack.mods().forEach( function( mod ){
+        mod.srcs()
+        .filter( function( src ){
+            return /\.doc\.xml$/.test( src.file.name() )
+        } )
+        .forEach( function( src ){
+            var comment= index.createComment( '../../' + src.file.relate('').replace( /\\/g, '/' ) )
+            index.documentElement.appendChild( index.importNode( comment, true ) )
+            var doc= ( new $node.xmldom.DOMParser ).parseFromString( src.file.content() + '' ).documentElement
+            index.documentElement.appendChild( doc )
+        } )
+    })
+    
+    return pack.file.child( '-mix' ).child( $jin_vary2string( 'index', vary ) + '.doc.xml' )
     .content( ( new $node.xmldom.XMLSerializer ).serializeToString( index ) )
 }

@@ -21,10 +21,26 @@ $jin_wrapper( function( $jin_domx, domx ){
             proc.importStylesheet( $jin_unwrap( stylesheet ) )
             var doc= proc.transformToDocument( domx.$ )
             return $jin_domx( doc )
-        } else {
-            var text= domx.$.transformNode( $jin_unwrap( stylesheet ) )
-            return $jin_domx.parse( text )
+        } else { // works incorrectly =(
+            var result= domx.$.transformNode( $jin_unwrap( stylesheet ) )
+            return $jin_domx.parse( result )
         }
+    }
+    
+    domx.render= function( domx, from, to ){
+        from= $jin_unwrap( from )
+        to= $jin_unwrap( to )
+        
+        if( $jin_support.xmlModel() === 'w3c' ){
+            var proc= new XSLTProcessor
+            proc.importStylesheet( domx.$ )
+            var doc= proc.transformToDocument( from )
+            to.innerHTML= $jin_domx( doc )
+        } else {
+            to.innerHTML= from.transformNode( domx.$ )
+        }
+        
+        return domx
     }
     
     $jin_domx.parse= function( str ){

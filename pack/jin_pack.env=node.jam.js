@@ -76,6 +76,8 @@ $jin_class( function( $jin_pack, pack ){
             
             if( !srcs.length ) return
             
+            srcs.sort()
+            
             var mainMod= mod.pack().mod()
             if( mainMod.file.exists() ) processMod( mainMod )
             

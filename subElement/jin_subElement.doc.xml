@@ -1,0 +1,21 @@
+<?xml-stylesheet href="../-mix/doc.stage=dev.xsl" type="text/xsl"?>
+<doc_root
+    doc_title="$jin_subElement"
+    >
+
+    <p>Свойство, возвращающее дочерний элемент по имени (элемента или его аттрибута).</p>
+    <p>
+        <script type="wc_test">
+            test.ok( $jin_subElement )
+        </script>
+        <script type="wc_test">
+            var body= $jin_subElement( 'body' )
+            test.ok( body( document, 0 ), document.body )
+        </script>
+        <script type="wc_test">
+            var body= $jin_subElement( 'body' )
+            test.ok( body( document )[ 0 ], document.body )
+        </script>
+    </p>
+    
+</doc_root>
