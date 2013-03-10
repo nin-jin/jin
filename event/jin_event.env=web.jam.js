@@ -6,16 +6,32 @@ this.$jin_event= $jin_mixin( function( $jin_event, event ){
     $jin_event.cancelable= false
     
     $jin_event.listen= function( node, handler ){
-        return $jin_nodeListener
-        (   node
-        ,   $jin_event.type
-        ,   $jin_event.wrapHandler( handler )
-        )
+        if( node.addEventListener ){
+            return $jin_nodeListener
+            (   node
+            ,   $jin_event.type
+            ,   $jin_event.wrapHandler( handler )
+            )
+        } else {
+            return $jin_nodeListener
+            (   node
+            ,   /^[a-zA-Z]+$/.test( $jin_event.type ) ? $jin_event.type : 'beforeeditfocus'
+            ,   $jin_event.wrapHandler( handler )
+            )
+        }
     }
     
     $jin_event.wrapHandler= function( handler ){
-        return function( event ){
-            return handler( $jin_event( event ) )
+        if( document.addEventListener ){
+            return function( event ){
+                return handler( $jin_event( event ) )
+            }
+        } else {
+            return function( event ){
+                event= $jin_event( event )
+                if( event.type() !== $jin_event.type ) return
+                return handler( event )
+            }
         }
     }
     
@@ -27,8 +43,13 @@ this.$jin_event= $jin_mixin( function( $jin_event, event ){
     var init= event.init
     event.init= function( event, raw ){
         if( arguments.length === 1 ){
-            raw= document.createEvent( 'Event' )
-            raw.initEvent( $jin_event.type, $jin_event.bubbles, $jin_event.cancelable )
+            if( document.createEvent ){
+                raw= document.createEvent( 'Event' )
+                raw.initEvent( $jin_event.type, $jin_event.bubbles, $jin_event.cancelable )
+            } else {
+                raw= document.createEventObject()
+                raw.type= $jin_event.type
+            }
         } else {
             raw= $jin_unwrap( raw )
         }
@@ -37,7 +58,16 @@ this.$jin_event= $jin_mixin( function( $jin_event, event ){
     
     event.scream=
     function( event, node ){
-        node.dispatchEvent( event.$ )
+        if( node.dispatchEvent ){
+            node.dispatchEvent( event.$ )
+        } else {
+            if( /^[a-zA-Z]+$/.test( event.type() ) ){
+                node.fireEvent( 'on' + event.type(), event.$ )
+            } else {
+                event.$.$jin_event_type= event.type()
+                node.fireEvent( 'onbeforeeditfocus', event.$ )
+            }
+        }
         return event
     }
     
@@ -49,9 +79,14 @@ this.$jin_event= $jin_mixin( function( $jin_event, event ){
     event.type=
     function( event, type ){
         if( arguments.length === 1 )
-            return event.$.type
+            return event.$.$jin_event_type || event.$.type
         
-        event.$.initEvent( type, event.bubbles(), event.cancelable() )
+        if( event.$.initEvent ){
+            event.$.initEvent( type, event.bubbles(), event.cancelable() )
+        } else {
+            event.$.$jin_event_type= event.$.type= type
+        }
+        
         return event
     }
     
@@ -78,7 +113,8 @@ this.$jin_event= $jin_mixin( function( $jin_event, event ){
         if( arguments.length === 1 )
             return event.$.defaultPrevented || event.$.$jin_event_catched
         
-        if( catched ) event.$.preventDefault()
+        event.$.returnValue= !catched
+        if( catched && event.$.preventDefault ) event.$.preventDefault()
         event.$.$jin_event_catched= event.$.defaultPrevented= catched
         
         return event

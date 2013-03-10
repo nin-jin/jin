@@ -34,7 +34,7 @@ $jin_class( function( $jin_nodeListener, listener ){
             )
         } else {
             listener.node.attachEvent
-            (   listener.event
+            (   'on' + listener.event
             ,   listener.handler
             )
         }
@@ -44,11 +44,18 @@ $jin_class( function( $jin_nodeListener, listener ){
     
     listener.off=
     function( listener ){
-        listener.node.removeEventListener
-        (   listener.event
-        ,   listener.handler
-        ,   false
-        )
+        if( listener.node.removeEventListener ){
+            listener.node.removeEventListener
+            (   listener.event
+            ,   listener.handler
+            ,   false
+            )
+        } else {
+            listener.node.detachEvent
+            (   'on' + listener.event
+            ,   listener.handler
+            )
+        }
         
         return listener
     }
