@@ -1,5 +1,5 @@
-this.$jin_event= $jin_mixin( function( $jin_event, event ){
-    $jin_wrapper.scheme.apply( this, arguments )
+this.$jin_event= $jin_class( function( $jin_event, event ){
+    $jin_wrapper.scheme( $jin_event )
     
     $jin_event.type= null
     $jin_event.bubbles= false

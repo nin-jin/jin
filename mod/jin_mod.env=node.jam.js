@@ -1,8 +1,8 @@
 this.$jin_mod=
 $jin_class( function( $jin_mod, mod ){
     
-    $jin_registry.scheme( $jin_mod, mod )
-    $jin_wrapper.scheme( $jin_mod, mod )
+    $jin_registry.scheme( $jin_mod )
+    $jin_wrapper.scheme( $jin_mod )
     
     mod.file= null
     

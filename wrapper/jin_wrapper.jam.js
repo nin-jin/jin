@@ -1,5 +1,5 @@
 this.$jin_wrapper=
-$jin_mixin( function( $jin_wrapper, wrapper ){
+$jin_class( function( $jin_wrapper, wrapper ){
     
     var make= $jin_wrapper.make
     $jin_wrapper.make=

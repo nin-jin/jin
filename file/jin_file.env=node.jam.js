@@ -1,8 +1,8 @@
 this.$jin_file=
 $jin_class( function( $jin_file, file ){
     
-    $jin_registry.scheme( $jin_file, file )
-    $jin_wrapper.scheme( $jin_file, file )
+    $jin_registry.scheme( $jin_file )
+    $jin_wrapper.scheme( $jin_file )
     
     var init= file.init
     file.init= function( file, path ){

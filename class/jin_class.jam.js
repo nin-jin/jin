@@ -4,7 +4,7 @@ this.$jin_class= function( scheme ){
         var proto= klass.prototype
         proto.init= function( obj ){ }
         
-        klass.scheme= scheme
+        klass.scheme= $jin_class_scheme( scheme )
         
         var make= klass.make
         klass.make= function( ){
@@ -32,7 +32,7 @@ this.$jin_class= function( scheme ){
             destroy( klass )
         }
         
-        scheme( klass, proto )
+        klass.scheme( klass )
         
         for( var key in proto ){
             if( !proto.hasOwnProperty( key ) )

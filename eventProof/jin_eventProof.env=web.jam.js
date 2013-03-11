@@ -1,5 +1,5 @@
-this.$jin_eventProof= $jin_mixin( function( $jin_eventProof, event ){
-    $jin_event.scheme.apply( this, arguments )
+this.$jin_eventProof= $jin_class( function( $jin_eventProof, event ){
+    $jin_event.scheme( $jin_eventProof )
     
     var scream= event.scream
     event.scream=

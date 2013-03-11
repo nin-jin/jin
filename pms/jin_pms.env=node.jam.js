@@ -1,8 +1,8 @@
 this.$jin_pms=
 $jin_class( function( $jin_pms, pms ){
     
-    $jin_registry.scheme( $jin_pms, pms )
-    $jin_wrapper.scheme( $jin_pms, pms )
+    $jin_registry.scheme( $jin_pms )
+    $jin_wrapper.scheme( $jin_pms )
     
     pms.file= null
     

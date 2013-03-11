@@ -9,7 +9,8 @@
             test.ok( $jin_eventProof )
         </script>
         <script type="wc_test">
-            var onTest1= $jin_eventProof( function( onTest1, event ){
+            var onTest1= $jin_class( function( onTest1, event ){
+                $jin_eventProof.scheme( onTest1 )
                 onTest1.type= '$jin_event_test_1'
             } )
             
@@ -20,7 +21,8 @@
             }
         </script>
         <script type="wc_test">
-            var onTest2= $jin_eventProof( function( onTest2, event ){
+            var onTest2= $jin_class( function( onTest2, event ){
+                $jin_eventProof.scheme( onTest2 )
                 onTest2.type= '$jin_event_test_2'
             } )
             
@@ -35,18 +37,19 @@
             test.ok()
         </script>
         <script type="wc_test">
-            var onTest1= $jin_eventProof( function( onTest1, event ){
-                onTest1.type= '$jin_event_test_3'
+            var onTest3= $jin_class( function( onTest3, event ){
+                $jin_eventProof.scheme( onTest3 )
+                onTest3.type= '$jin_event_test_3'
             } )
             
-            var listener= onTest1.listen( document, function( event ){
+            var listener= onTest3.listen( document, function( event ){
                 event.catched( true )
             })
             
             listener.destroy()
             
             try {
-                onTest1().scream( document )
+                onTest3().scream( document )
             } catch( error ){
                 test.ok( error )
             }

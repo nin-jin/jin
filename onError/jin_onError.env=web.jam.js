@@ -1,4 +1,6 @@
-this.$jin_onError= $jin_event( function( $jin_onError, event ){
+this.$jin_onError= $jin_class( function( $jin_onError, event ){
+    
+    $jin_event.scheme( $jin_onError )
     
     $jin_onError.type= 'error'
     

@@ -9,7 +9,8 @@
             test.ok( $jin_event )
         </script>
         <script type="wc_test">
-            $jin_event_test= $jin_event( function( onTest1, event ){
+            $jin_event_test= $jin_class( function( onTest1, event ){
+                $jin_event.scheme( onTest1 )
                 onTest1.type= '$jin_event_test'
                 onTest1.bubbles= true
             } )

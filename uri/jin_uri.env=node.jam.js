@@ -24,7 +24,7 @@ $jin_class( function( $jin_uri, uri ){
         return make.call( this, data )
     }
     
-    $jin_wrapper.scheme( $jin_uri, uri )
+    $jin_wrapper.scheme( $jin_uri )
     
     $jin_uri.escape= function( str ){
         return str

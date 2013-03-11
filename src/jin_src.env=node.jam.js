@@ -1,8 +1,8 @@
 this.$jin_src=
 $jin_class( function( $jin_src, src ){
     
-    $jin_registry.scheme( $jin_src, src )
-    $jin_wrapper.scheme( $jin_src, src )
+    $jin_registry.scheme( $jin_src )
+    $jin_wrapper.scheme( $jin_src )
     
     src.file= null
     

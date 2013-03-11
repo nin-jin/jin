@@ -1,7 +1,7 @@
 this.$jin_resource=
-$jin_mixin( function( $jin_resource, resource ){
+$jin_class( function( $jin_resource, resource ){
     
-    $jin_registry.scheme( $jin_resource, resource )
+    $jin_registry.scheme( $jin_resource )
     
     resource.uri= null
     resource.cache= null

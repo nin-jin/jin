@@ -1,5 +1,5 @@
 this.$jin_registry=
-$jin_mixin( function( $jin_registry, registry ){
+$jin_class( function( $jin_registry, registry ){
     var storage= {}
     
     var make= $jin_registry.make

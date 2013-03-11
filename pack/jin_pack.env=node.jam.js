@@ -1,8 +1,8 @@
 this.$jin_pack=
 $jin_class( function( $jin_pack, pack ){
     
-    $jin_registry.scheme( $jin_pack, pack )
-    $jin_wrapper.scheme( $jin_pack, pack )
+    $jin_registry.scheme( $jin_pack )
+    $jin_wrapper.scheme( $jin_pack )
     
     pack.file= null
     

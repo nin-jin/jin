@@ -59,7 +59,7 @@
     </p>
     <p>Уничтожение компоненты приводит к уничтожению всех созданных ею виджетов.</p>
     <p>
-        <script type="wc_test">
+        <script type="wc_test_skip">
             var result
             
             var comp= $jin_component

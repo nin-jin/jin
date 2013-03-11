@@ -1,4 +1,6 @@
-this.$jin_onDataNeeds= $jin_eventProof( function( $jin_onDataNeeds, event ){
+this.$jin_onDataNeeds= $jin_class( function( $jin_onDataNeeds, event ){
+    
+    $jin_eventProof.scheme( $jin_onDataNeeds )
     
     $jin_onDataNeeds.type= 'jin_onDataNeeds'
     $jin_onDataNeeds.bubbles= true

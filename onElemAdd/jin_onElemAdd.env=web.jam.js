@@ -1,4 +1,6 @@
-this.$jin_onElemAdd= $jin_event( function( $jin_onElemAdd, event ){
+this.$jin_onElemAdd= $jin_class( function( $jin_onElemAdd, event ){
+    
+    $jin_event.scheme( $jin_onElemAdd )
     
     $jin_onElemAdd.type= '$jin_onElemAdd'
     

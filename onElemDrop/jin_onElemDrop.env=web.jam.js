@@ -1,4 +1,6 @@
-this.$jin_onElemDrop= $jin_event( function( $jin_onElemDrop, event ){
+this.$jin_onElemDrop= $jin_class( function( $jin_onElemDrop, event ){
+    
+    $jin_event.scheme( $jin_onElemDrop )
     
     $jin_onElemDrop.type= '$jin_onElemDrop'
     

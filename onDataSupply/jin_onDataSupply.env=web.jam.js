@@ -1,4 +1,6 @@
-this.$jin_onDataSupply= $jin_eventProof( function( $jin_onDataSupply, event ){
+this.$jin_onDataSupply= $jin_class( function( $jin_onDataSupply, event ){
+    
+    $jin_eventProof.scheme( $jin_onDataSupply )
     
     $jin_onDataSupply.type= 'jin_onDataSupply'
     

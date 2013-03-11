@@ -10,19 +10,19 @@
         </script>
         <script type="wc_test">
             var Node= $jin_class( function( Node, node ){
-                $jin_wrapper.scheme( Node, node )
+                $jin_wrapper.scheme( Node )
             } )
             test.ok( Node( document ) )
         </script>
         <script type="wc_test">
             var Node= $jin_class( function( Node, node ){
-                $jin_wrapper.scheme( Node, node )
+                $jin_wrapper.scheme( Node )
             } )
             test.ok( Node( document ).$, document )
         </script>
         <script type="wc_test">
             var Node= $jin_class( function( Node, node ){
-                $jin_wrapper.scheme( Node, node )
+                $jin_wrapper.scheme( Node )
             } )
             
             var node= Node( document )
@@ -37,7 +37,7 @@
                     return make.call( this, parseInt( value ) )
                 }
                 
-                $jin_wrapper.scheme( Int, int )
+                $jin_wrapper.scheme( Int )
             } )
             
             test.ok( Int( '1.2.3' ).$, 1 )

@@ -1,5 +1,7 @@
 this.$jin_domx=
-$jin_wrapper( function( $jin_domx, domx ){
+$jin_class( function( $jin_domx, domx ){
+    
+    $jin_wrapper.scheme( $jin_domx )
     
     domx.toDOMDocument=
     function( domx ){

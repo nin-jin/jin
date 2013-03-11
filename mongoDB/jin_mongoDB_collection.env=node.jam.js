@@ -1,5 +1,7 @@
 this.$jin_mongoDB_collection=
-$jin_wrapper( function( $jin_mongoDB_collection, mongoDB_collection ){
+$jin_class( function( $jin_mongoDB_collection, mongoDB_collection ){
+    
+    $jin_wrapper.scheme( $jin_mongoDB_collection )
     
     mongoDB_collection.select= function( mongoDB_collection, query ){
         var cursor= mongoDB_collection.$.find( query )
