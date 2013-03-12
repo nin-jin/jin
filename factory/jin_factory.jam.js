@@ -9,7 +9,12 @@ this.$jin_factory= function( scheme ){
         return new this
     }
     
+    factory.init= function( ){
+    }
+    
     scheme( factory )
+    
+    factory.init()
     
     return factory
 }

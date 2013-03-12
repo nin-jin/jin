@@ -36,28 +36,37 @@ $jin_class( function( $jin_component, component ){
         destroy.apply( this, arguments )
     }
     
-    $jin_onElemAdd.listen( document, function( event ){
-        checkNode( event.target() )
-    })
-    
-    $jin_onElemDrop.listen( document, function( event ){
-        var node= event.target()
+    var staticInit= $jin_component.init
+    $jin_component.init= function( ){
+        staticInit()
         
-        var widgets= node.jin_component_widgets
-        if( !widgets ) return
+        $jin_component.onElemAdd=
+        $jin_onElemAdd.listen( document, function( event ){
+            checkNode( event.target() )
+        })
         
-        for( var id in widgets ){
-            var widget= widgets[ id ]
-            if( !widget ) continue
-            widget.destroy()
-        }
+        $jin_component.onElemDrop=
+        $jin_onElemDrop.listen( document, function( event ){
+            var node= event.target()
+            
+            var widgets= node.jin_component_widgets
+            if( !widgets ) return
+            
+            for( var id in widgets ){
+                var widget= widgets[ id ]
+                if( !widget ) continue
+                widget.destroy()
+            }
+            
+            delete node.jin_component_widgets
+        })
         
-        delete node.jin_component_widgets
-    })
-    
-    $jin_onDomReady.listen( document, function( event ){
-        $jin_component.checkTree( document )
-    })
+        $jin_component.onDomReady= 
+        $jin_onDomReady.listen( document, function( event ){
+            $jin_component.checkTree( document )
+        })
+        
+    }
     
     function checkNode( node ){
         if( node.nodeType != 1 ) return
