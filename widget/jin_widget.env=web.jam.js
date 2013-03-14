@@ -1,4 +1,4 @@
-this.$jin_widget= function( $jin_widget, widget ){
+this.$jin_widget= $jin_class_scheme( function( $jin_widget, widget ){
     
     $jin_wrapper.scheme( $jin_widget )
     
@@ -8,6 +8,12 @@ this.$jin_widget= function( $jin_widget, widget ){
     $jin_widget.init= function( ){
         staticInit()
         $jin_widget.component= $jin_component( $jin_widget.id, $jin_widget )
+    }
+    
+    var make= $jin_widget.make
+    $jin_widget.make= function( node ){
+        var widgets= $jin_component.widgetsOf( node )
+        return widgets[ $jin_widget.id ] || make.apply( this, arguments )
     }
     
     var destroy= $jin_widget.destroy
@@ -20,4 +26,4 @@ this.$jin_widget= function( $jin_widget, widget ){
         return $jin_widget.id
     }
     
-}
+} )
