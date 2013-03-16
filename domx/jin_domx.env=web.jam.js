@@ -18,7 +18,7 @@ $jin_class( function( $jin_domx, domx ){
             var serializer= new XMLSerializer
             return serializer.serializeToString( domx.$ )
         } else {
-            return String( domx.$.xml ).replace( /^\s+|\s+$/g, '' )
+            return String( domx.$.xml )
         }
     }
     
@@ -106,7 +106,7 @@ $jin_class( function( $jin_domx, domx ){
         var nodes= domx.$.childNodes
         var list= []
         for( var i= 0; i < nodes.length; ++i ){
-            lst.push( $jin_domx( nodes[ i ] ) )
+            list.push( $jin_domx( nodes[ i ] ) )
         }
         return list
     }
@@ -147,12 +147,12 @@ $jin_class( function( $jin_domx, domx ){
         if( $jin_support.xmlModel() === 'w3c' ){
             var parser= new DOMParser
             var doc= parser.parseFromString( str, 'text/xml' )
-            return $jin_domx( doc.documentElement )
+            return $jin_domx( doc.documentElement || doc )
         } else {
             var doc= new ActiveXObject( 'MSXML2.DOMDocument' )
             doc.async= false
             doc.loadXML( str )
-            return $jin_domx( doc.documentElement )
+            return $jin_domx( doc.documentElement || doc )
         }
     }
 
