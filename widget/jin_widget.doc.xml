@@ -12,9 +12,9 @@
             var result
             
             this.widget= $jin_class( function( Widget, widget ){
-                Widget.id= $jin_makeId( 'jin_widget_test' )
-                
                 $jin_widget( Widget, widget )
+                
+                Widget.id= $jin_makeId( 'jin_widget_test' )
                 
                 var init= widget.init
                 widget.init= function( widget, node ){

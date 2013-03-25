@@ -124,5 +124,10 @@ this.$jin_event= $jin_class( function( $jin_event, event ){
     function( event ){
         return $jin_event + '()'
     }
+
+    event.keyCode=
+    function( event ){
+        return event.$.keyCode
+    }
     
 })

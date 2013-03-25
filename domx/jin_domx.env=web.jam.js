@@ -25,7 +25,7 @@ $jin_class( function( $jin_domx, domx ){
     domx.transform= function( domx, stylesheet ){
         if( $jin_support.xmlModel() === 'w3c' ){
             var proc= new XSLTProcessor
-            proc.importStylesheet( $jin_unwrap( stylesheet ) )
+            proc.importStylesheet( stylesheet.toDOMDoc() )
             var doc= proc.transformToDocument( domx.$ )
             return $jin_domx( doc )
         } else { // works incorrectly =(

@@ -90,7 +90,7 @@ $jin_class( function( $jin_file, file ){
     }
     
     file.uri= function( file ){
-        return $jin_uri( file.relate( '' ).replace( /\\/g, '/' ) )
+        return $jin_uri( file.relate( '' ).replace( /\\/g, '/' ) + '?jin_file_version=' + file.version() )
     }
     
 } )
