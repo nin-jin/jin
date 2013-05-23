@@ -32,17 +32,18 @@ this.$jin_test= $jin_class( function( $jin_test, test ){
         
         if( !complete ) test.passed= false
         
-        if( test.timeout != null ){
-            if( test.passed == null ){
-                test.timer= setTimeout( function( ){
-                    test.asserts.push( false )
-                    test.errors.push( new Error( 'timeout(' + test.timeout + ')' ) )
-                    test.done()
-                }, test.timeout )
-            }
-        } else {
-            test.done()
+        if( test.timeout != null && test.passed == null ){
+            
+            test.timer= setTimeout( function( ){
+                test.asserts.push( false )
+                test.errors.push( new Error( 'timeout(' + test.timeout + ')' ) )
+                test.done()
+            }, test.timeout )
+            
+            return
         }
+        
+        test.done()
     }
     
     var AND= function( a, b ){ return a && b }
